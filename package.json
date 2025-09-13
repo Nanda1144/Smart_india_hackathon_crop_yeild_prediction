@@ -1,25 +1,22 @@
 {
-  "name": "crop-yield-prediction",
+  "name": "ai-crop-yield-prediction",
   "version": "1.0.0",
-  "description": "AI-Powered Crop Yield Prediction and Optimization",
-  "main": "app.js",
+  "description": "AI-Powered Crop Yield Prediction and Optimization System",
+  "main": "index.html",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "python -m http.server",
+    "deploy": "echo 'See README.md for deployment instructions'"
   },
-  "dependencies": {
-    "axios": "^1.6.0",
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "i18next": "^23.7.6",
-    "i18next-fs-backend": "^2.3.1",
-    "mongoose": "^8.0.3",
-    "multer": "^1.4.5-lts.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
-  }
+  "keywords": [
+    "agriculture",
+    "ai",
+    "crop-yield",
+    "prediction",
+    "farming",
+    "voice-assistant",
+    "multilingual"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {}
 }
