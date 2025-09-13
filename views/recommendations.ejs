@@ -1,0 +1,136 @@
+<%- include('partials/header') %>
+
+<div class="recommendations-page fade-in">
+  <h2>Farm Recommendations</h2>
+  <p>Personalized recommendations based on your farm conditions</p>
+  
+  <div class="card">
+    <h3>Current Recommendations</h3>
+    <div class="recommendation-list">
+      <div class="recommendation-item">
+        <div class="recommendation-icon">
+          <i class="fas fa-tint"></i>
+        </div>
+        <div class="recommendation-content">
+          <h4>Irrigation Schedule</h4>
+          <p>Next irrigation in 3 days. Apply 2 inches of water.</p>
+          <div class="recommendation-priority high">High Priority</div>
+        </div>
+      </div>
+      
+      <div class="recommendation-item">
+        <div class="recommendation-icon">
+          <i class="fas fa-flask"></i>
+        </div>
+        <div class="recommendation-content">
+          <h4>Fertilizer Application</h4>
+          <p>Apply nitrogen fertilizer at 50 kg/ha next week.</p>
+          <div class="recommendation-priority medium">Medium Priority</div>
+        </div>
+      </div>
+      
+      <div class="recommendation-item">
+        <div class="recommendation-icon">
+          <i class="fas fa-bug"></i>
+        </div>
+        <div class="recommendation-content">
+          <h4>Pest Control</h4>
+          <p>Monitor for stem borer infestation. Consider neem oil spray if detected.</p>
+          <div class="recommendation-priority low">Low Priority</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h3>Seasonal Recommendations</h3>
+    <div class="seasonal-tabs">
+      <button class="tab-btn active" data-season="kharif">Kharif Season</button>
+      <button class="tab-btn" data-season="rabi">Rabi Season</button>
+      <button class="tab-btn" data-season="zaid">Zaid Season</button>
+    </div>
+    
+    <div class="tab-content active" id="kharif">
+      <h4>Kharif Season Recommendations</h4>
+      <ul>
+        <li>Choose flood-resistant rice varieties</li>
+        <li>Ensure proper drainage systems</li>
+        <li>Apply basal fertilizer before monsoon</li>
+        <li>Monitor for blast disease in humid conditions</li>
+      </ul>
+    </div>
+    
+    <div class="tab-content" id="rabi">
+      <h4>Rabi Season Recommendations</h4>
+      <ul>
+        <li>Choose drought-tolerant wheat varieties</li>
+        <li>Apply irrigation at critical growth stages</li>
+        <li>Monitor for yellow rust disease</li>
+        <li>Consider mulching to conserve soil moisture</li>
+      </ul>
+    </div>
+    
+    <div class="tab-content" id="zaid">
+      <h4>Zaid Season Recommendations</h4>
+      <ul>
+        <li>Choose heat-tolerant crops like maize or vegetables</li>
+        <li>Ensure adequate irrigation facilities</li>
+        <li>Apply organic matter to improve soil water retention</li>
+        <li>Use shade nets for sensitive crops</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h3>Resource Optimization</h3>
+    <div class="resource-optimization">
+      <div class="resource-item">
+        <h4>Water Usage</h4>
+        <div class="progress-bar">
+          <div class="progress" style="width: 65%"></div>
+        </div>
+        <p>Current usage: 65% of optimal</p>
+      </div>
+      
+      <div class="resource-item">
+        <h4>Fertilizer Efficiency</h4>
+        <div class="progress-bar">
+          <div class="progress" style="width: 80%"></div>
+        </div>
+        <p>Current efficiency: 80%</p>
+      </div>
+      
+      <div class="resource-item">
+        <h4>Pesticide Usage</h4>
+        <div class="progress-bar">
+          <div class="progress" style="width: 45%"></div>
+        </div>
+        <p>Current usage: 45% of recommended</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Remove active class from all buttons and contents
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Show corresponding content
+        const season = this.getAttribute('data-season');
+        document.getElementById(season).classList.add('active');
+      });
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
