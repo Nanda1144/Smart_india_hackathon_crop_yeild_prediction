@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= user.language || 'en' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,17 +14,33 @@
         <img src="/images/logo.png" alt="Crop Yield Prediction">
         <h1>AI Crop Yield Prediction</h1>
       </div>
-      <nav>
-        <ul>
-          <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="/prediction">Prediction</a></li>
-          <li><a href="/recommendations">Recommendations</a></li>
-          <li><a href="/about">About</a></li>
-          <% if (user) { %>
-            <li><a href="/logout">Logout</a></li>
-          <% } %>
-        </ul>
-      </nav>
+      <div class="header-actions">
+        <%- include('language-selector') %>
+        <nav>
+          <ul>
+            <li><a href="/dashboard" class="nav-link"><i class="fas fa-home"></i> <span data-i18n="dashboard">Dashboard</span></a></li>
+            <li><a href="/prediction" class="nav-link"><i class="fas fa-chart-line"></i> <span data-i18n="prediction">Prediction</span></a></li>
+            <li><a href="/soil-analysis" class="nav-link"><i class="fas fa-mountain"></i> <span data-i18n="soilAnalysis">Soil Analysis</span></a></li>
+            <li><a href="/crop-calendar" class="nav-link"><i class="fas fa-calendar-alt"></i> <span data-i18n="cropCalendar">Crop Calendar</span></a></li>
+            <li><a href="/market-prices" class="nav-link"><i class="fas fa-coins"></i> <span data-i18n="marketPrices">Market Prices</span></a></li>
+            <li><a href="/recommendations" class="nav-link"><i class="fas fa-lightbulb"></i> <span data-i18n="recommendations">Recommendations</span></a></li>
+            <li>
+              <a href="/notifications" class="nav-link">
+                <i class="fas fa-bell"></i> 
+                <span data-i18n="notifications">Notifications</span>
+                <% if (unreadNotifications > 0) { %>
+                  <span class="notification-badge"><%= unreadNotifications %></span>
+                <% } %>
+              </a>
+            </li>
+            <li><a href="/profile" class="nav-link"><i class="fas fa-user"></i> <span data-i18n="profile">Profile</span></a></li>
+            <li><a href="/about" class="nav-link"><i class="fas fa-info-circle"></i> <span data-i18n="about">About</span></a></li>
+            <% if (user) { %>
+              <li><a href="/logout" class="nav-link"><i class="fas fa-sign-out-alt"></i> <span data-i18n="logout">Logout</span></a></li>
+            <% } %>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
   <main class="container fade-in">
