@@ -1,0 +1,430 @@
+<%- include('partials/header') %>
+
+<div class="analytics-page fade-in">
+  <h2>Farm Analytics</h2>
+  <p>Comprehensive analysis of your farm data</p>
+  
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Yield Analysis</h3>
+      <div class="card-actions">
+        <select id="yieldAnalysisCrop" class="form-control">
+          <option value="all">All Crops</option>
+          <option value="rice">Rice</option>
+          <option value="wheat">Wheat</option>
+          <option value="maize">Maize</option>
+          <option value="cotton">Cotton</option>
+          <option value="sugarcane">Sugarcane</option>
+        </select>
+        <select id="yieldAnalysisPeriod" class="form-control">
+          <option value="yearly">Yearly</option>
+          <option value="seasonal">Seasonal</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="chart-container">
+        <canvas id="yieldAnalysisChart"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <div class="analytics-grid">
+    <div class="analytics-card">
+      <h3>Crop Distribution</h3>
+      <div class="chart-container">
+        <canvas id="cropDistributionChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="analytics-card">
+      <h3>Soil Health Trends</h3>
+      <div class="chart-container">
+        <canvas id="soilHealthChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="analytics-card">
+      <h3>Weather Impact</h3>
+      <div class="chart-container">
+        <canvas id="weatherImpactChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="analytics-card">
+      <h3>Resource Utilization</h3>
+      <div class="chart-container">
+        <canvas id="resourceUtilizationChart"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Recommendations Based on Analysis</h3>
+    </div>
+    <div class="card-body">
+      <div class="recommendation-list">
+        <div class="recommendation-item">
+          <div class="recommendation-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <div class="recommendation-content">
+            <h4>Optimize Crop Rotation</h4>
+            <p>Based on your yield analysis, consider rotating between rice and legumes to improve soil nitrogen levels.</p>
+            <div class="recommendation-priority high">High Impact</div>
+          </div>
+        </div>
+        
+        <div class="recommendation-item">
+          <div class="recommendation-icon">
+            <i class="fas fa-tint"></i>
+          </div>
+          <div class="recommendation-content">
+            <h4>Improve Irrigation Efficiency</h4>
+            <p>Your water usage is 20% higher than optimal. Consider drip irrigation to reduce water consumption.</p>
+            <div class="recommendation-priority medium">Medium Impact</div>
+          </div>
+        </div>
+        
+        <div class="recommendation-item">
+          <div class="recommendation-icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div class="recommendation-content">
+            <h4>Balanced Fertilizer Application</h4>
+            <p>Soil analysis shows phosphorus deficiency. Apply rock phosphate before next planting season.</p>
+            <div class="recommendation-priority high">High Impact</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Voice Assistant -->
+<div class="voice-assistant">
+  <button id="voiceAssistantBtn" class="voice-assistant-btn">
+    <i class="fas fa-microphone"></i>
+  </button>
+  
+  <div id="voiceAssistantPanel" class="voice-assistant-panel">
+    <div class="voice-assistant-header">
+      <h4>Farming Assistant</h4>
+      <button id="voiceAssistantClose" class="voice-assistant-close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div id="voiceAssistantMessages" class="voice-assistant-messages"></div>
+    
+    <div class="voice-assistant-input">
+      <input type="text" id="voiceAssistantInput" placeholder="Type your message...">
+      <button id="voiceAssistantSend" class="btn">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+      <button id="voiceAssistantVoiceBtn" class="btn">
+        <i class="fas fa-microphone"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize charts
+    initializeYieldAnalysisChart();
+    initializeCropDistributionChart();
+    initializeSoilHealthChart();
+    initializeWeatherImpactChart();
+    initializeResourceUtilizationChart();
+    
+    // Event listeners for filters
+    document.getElementById('yieldAnalysisCrop').addEventListener('change', updateYieldAnalysisChart);
+    document.getElementById('yieldAnalysisPeriod').addEventListener('change', updateYieldAnalysisChart);
+    
+    // Initialize voice assistant
+    initializeVoiceAssistant();
+  });
+  
+  function initializeYieldAnalysisChart() {
+    const ctx = document.getElementById('yieldAnalysisChart').getContext('2d');
+    
+    window.yieldAnalysisChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+        datasets: [
+          {
+            label: 'Rice',
+            data: [3.2, 3.5, 3.8, 3.6, 4.0, 4.2, 4.5],
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1
+          },
+          {
+            label: 'Wheat',
+            data: [2.8, 2.9, 3.1, 3.0, 3.2, 3.3, 3.5],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            tension: 0.1
+          },
+          {
+            label: 'Maize',
+            data: [4.0, 4.2, 4.5, 4.3, 4.6, 4.8, 5.0],
+            borderColor: 'rgb(255, 206, 86)',
+            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+            tension: 0.1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Crop Yield Over Time (tons/acre)'
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: 'Yield (tons/acre)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Year'
+            }
+          }
+        }
+      }
+    });
+  }
+  
+  function initializeCropDistributionChart() {
+    const ctx = document.getElementById('cropDistributionChart').getContext('2d');
+    
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Rice', 'Wheat', 'Maize', 'Cotton', 'Sugarcane'],
+        datasets: [{
+          data: [40, 25, 15, 10, 10],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(153, 102, 255, 0.7)'
+          ],
+          borderColor: [
+            'rgb(75, 192, 192)',
+            'rgb(255, 99, 132)',
+            'rgb(255, 206, 86)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Crop Distribution (%)'
+          },
+          legend: {
+            position: 'right',
+          }
+        }
+      }
+    });
+  }
+  
+  function initializeSoilHealthChart() {
+    const ctx = document.getElementById('soilHealthChart').getContext('2d');
+    
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['pH Level', 'Nitrogen', 'Phosphorus', 'Potassium', 'Organic Matter', 'Moisture'],
+        datasets: [{
+          label: 'Current',
+          data: [6.8, 0.15, 0.08, 0.20, 2.5, 22],
+          fill: true,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgb(54, 162, 235)',
+          pointBackgroundColor: 'rgb(54, 162, 235)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgb(54, 162, 235)'
+        }, {
+          label: 'Optimal',
+          data: [7.0, 0.20, 0.15, 0.25, 3.0, 25],
+          fill: true,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgb(75, 192, 192)',
+          pointBackgroundColor: 'rgb(75, 192, 192)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgb(75, 192, 192)'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        elements: {
+          line: {
+            borderWidth: 2
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Soil Health Parameters'
+          }
+        },
+        scales: {
+          r: {
+            angleLines: {
+              display: true
+            },
+            suggestedMin: 0,
+            suggestedMax: 10
+          }
+        }
+      }
+    });
+  }
+  
+  function initializeWeatherImpactChart() {
+    const ctx = document.getElementById('weatherImpactChart').getContext('2d');
+    
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Temperature', 'Rainfall', 'Humidity', 'Sunlight'],
+        datasets: [{
+          label: 'Impact on Rice',
+          data: [65, 80, 45, 70],
+          backgroundColor: 'rgba(75, 192, 192, 0.7)',
+        }, {
+          label: 'Impact on Wheat',
+          data: [75, 60, 40, 80],
+          backgroundColor: 'rgba(255, 99, 132, 0.7)',
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Weather Impact on Crop Yield (%)'
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Impact (%)'
+            }
+          }
+        }
+      }
+    });
+  }
+  
+  function initializeResourceUtilizationChart() {
+    const ctx = document.getElementById('resourceUtilizationChart').getContext('2d');
+    
+    new Chart(ctx, {
+      type: 'polarArea',
+      data: {
+        labels: ['Water', 'Fertilizer', 'Pesticides', 'Labor', 'Machinery'],
+        datasets: [{
+          data: [85, 70, 60, 75, 65],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(153, 102, 255, 0.7)'
+          ],
+          borderColor: [
+            'rgb(75, 192, 192)',
+            'rgb(255, 99, 132)',
+            'rgb(255, 206, 86)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Resource Utilization Efficiency (%)'
+          },
+          legend: {
+            position: 'right',
+          }
+        },
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+  }
+  
+  function updateYieldAnalysisChart() {
+    const crop = document.getElementById('yieldAnalysisCrop').value;
+    const period = document.getElementById('yieldAnalysisPeriod').value;
+    
+    // In a real app, you would fetch data based on the selected filters
+    // For demo purposes, we'll just update the chart title
+    
+    let title = 'Crop Yield Over Time (tons/acre)';
+    if (crop !== 'all') {
+      title = `${crop.charAt(0).toUpperCase() + crop.slice(1)} Yield Over Time (tons/acre)`;
+    }
+    
+    if (period === 'seasonal') {
+      title += ' - Seasonal';
+    } else if (period === 'monthly') {
+      title += ' - Monthly';
+    }
+    
+    window.yieldAnalysisChart.options.plugins.title.text = title;
+    window.yieldAnalysisChart.update();
+  }
+  
+  function initializeVoiceAssistant() {
+    // This function is defined in voice-assistant.js
+    // It will be called when the DOM is loaded
+  }
+</script>
+
+<%- include('partials/footer') %>
