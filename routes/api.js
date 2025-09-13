@@ -8,7 +8,7 @@ const Notification = require('../models/notification');
 router.get('/weather/:location', async (req, res) => {
   try {
     const location = req.params.location;
-    const apiKey = process.env.WEATHER_API_KEY;
+    const apiKey = process.env.2964ae4e6e693bfc9efa08f0395b83e9;
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
     
     const response = await axios.get(url);
