@@ -30,7 +30,7 @@ app.set('view engine', 'ejs');
 
 // Session setup
 app.use(session({
-  secret: 'crop-yield-prediction-secret',
+  secret: '8969457321',
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 3600000 } // 1 hour
