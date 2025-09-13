@@ -1,0 +1,90 @@
+<%- include('partials/header') %>
+
+<div class="preview-page fade-in">
+  <h2>Website Preview</h2>
+  <p>Click the buttons below to preview different pages of our website</p>
+  
+  <div class="preview-controls">
+    <button class="btn" id="previewLogin">Login Page</button>
+    <button class="btn" id="previewDashboard">Dashboard</button>
+    <button class="btn" id="previewPrediction">Prediction</button>
+    <button class="btn" id="previewRecommendations">Recommendations</button>
+    <button class="btn" id="previewAbout">About</button>
+    <button class="btn btn-secondary" id="autoPreview">Auto Preview</button>
+  </div>
+  
+  <div class="preview-frame-container">
+    <iframe id="previewFrame" class="preview-frame" src="/login" title="Website Preview"></iframe>
+  </div>
+  
+  <div class="preview-info">
+    <p><strong>Demo Login:</strong> Username: <code>farmer</code>, Password: <code>password</code></p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const previewFrame = document.getElementById('previewFrame');
+    const previewButtons = {
+      login: document.getElementById('previewLogin'),
+      dashboard: document.getElementById('previewDashboard'),
+      prediction: document.getElementById('previewPrediction'),
+      recommendations: document.getElementById('previewRecommendations'),
+      about: document.getElementById('previewAbout')
+    };
+    const autoPreviewBtn = document.getElementById('autoPreview');
+    
+    // Set up preview buttons
+    previewButtons.login.addEventListener('click', () => {
+      previewFrame.src = '/login';
+    });
+    
+    previewButtons.dashboard.addEventListener('click', () => {
+      previewFrame.src = '/dashboard';
+    });
+    
+    previewButtons.prediction.addEventListener('click', () => {
+      previewFrame.src = '/prediction';
+    });
+    
+    previewButtons.recommendations.addEventListener('click', () => {
+      previewFrame.src = '/recommendations';
+    });
+    
+    previewButtons.about.addEventListener('click', () => {
+      previewFrame.src = '/about';
+    });
+    
+    // Auto preview functionality
+    let autoPreviewInterval;
+    let isAutoPreviewing = false;
+    const pages = [
+      '/login',
+      '/dashboard',
+      '/prediction',
+      '/recommendations',
+      '/about'
+    ];
+    let currentPageIndex = 0;
+    
+    autoPreviewBtn.addEventListener('click', () => {
+      if (isAutoPreviewing) {
+        // Stop auto preview
+        clearInterval(autoPreviewInterval);
+        autoPreviewBtn.textContent = 'Auto Preview';
+        isAutoPreviewing = false;
+      } else {
+        // Start auto preview
+        autoPreviewBtn.textContent = 'Stop Preview';
+        isAutoPreviewing = true;
+        
+        autoPreviewInterval = setInterval(() => {
+          currentPageIndex = (currentPageIndex + 1) % pages.length;
+          previewFrame.src = pages[currentPageIndex];
+        }, 5000); // Change page every 5 seconds
+      }
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
