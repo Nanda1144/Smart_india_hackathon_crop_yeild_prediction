@@ -1,0 +1,1338 @@
+DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Crop Yield Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://via.placeholder.com/40" alt="Crop Yield Prediction">
+                <h1>AI Crop Yield Prediction</h1>
+            </div>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
+                        <option value="te">తెలుగు (Telugu)</option>
+                        <option value="or">ଓଡ଼ିଆ (Odia)</option>
+                        <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                        <option value="mr">मराठी (Marathi)</option>
+                        <option value="bn">বাংলা (Bengali)</option>
+                        <option value="gu">ગુજરાતી (Gujarati)</option>
+                        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                    </select>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="#" class="nav-link" data-page="prediction"><i class="fas fa-chart-line"></i> Prediction</a></li>
+                        <li><a href="#" class="nav-link" data-page="soil-analysis"><i class="fas fa-mountain"></i> Soil Analysis</a></li>
+                        <li><a href="#" class="nav-link" data-page="crop-calendar"><i class="fas fa-calendar-alt"></i> Crop Calendar</a></li>
+                        <li><a href="#" class="nav-link" data-page="market-prices"><i class="fas fa-coins"></i> Market Prices</a></li>
+                        <li><a href="#" class="nav-link" data-page="recommendations"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
+                        <li>
+                            <a href="#" class="nav-link" data-page="notifications">
+                                <i class="fas fa-bell"></i> Notifications
+                                <span class="notification-badge">3</span>
+                            </a>
+                        </li>
+                        <li><a href="#" class="nav-link" data-page="profile"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page-section active fade-in">
+            <h2>Farmer Dashboard</h2>
+            <p>Welcome back, Ram! Here's an overview of your farm.</p>
+            
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Current Crop</h3>
+                    <div class="stat-value">Rice</div>
+                    <p>Planted: 15 days ago</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Predicted Yield</h3>
+                    <div class="stat-value">3.2 t/ha</div>
+                    <p>Confidence: 85%</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <h3>Weather Status</h3>
+                    <div class="stat-value">Sunny</div>
+                    <p>Temp: 28°C, Humidity: 65%</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Alerts</h3>
+                    <div class="stat-value">2</div>
+                    <p>Pest risk, Nutrient deficiency</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Recent Activities</h3>
+                <ul class="activity-list">
+                    <li>Fertilizer applied - 3 days ago</li>
+                    <li>Irrigation completed - 5 days ago</li>
+                    <li>Soil test conducted - 10 days ago</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <a href="#" class="btn" data-page="prediction">Get New Prediction</a>
+                    <a href="#" class="btn btn-secondary" data-page="recommendations">View Recommendations</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prediction Page -->
+        <div id="prediction" class="page-section fade-in">
+            <h2>Crop Yield Prediction</h2>
+            <p>Enter your farm details to get an AI-powered yield prediction</p>
+            
+            <div class="card">
+                <form id="predictionForm">
+                    <div class="form-group">
+                        <label for="crop">Crop Type</label>
+                        <select id="crop" name="crop" required>
+                            <option value="">Select a crop</option>
+                            <option value="rice">Rice</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="maize">Maize</option>
+                            <option value="cotton">Cotton</option>
+                            <option value="sugarcane">Sugarcane</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="area">Farm Area (hectares)</label>
+                        <input type="number" id="area" name="area" min="0.1" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="soilType">Soil Type</label>
+                        <select id="soilType" name="soilType" required>
+                            <option value="">Select soil type</option>
+                            <option value="clay">Clay</option>
+                            <option value="loamy">Loamy</option>
+                            <option value="sandy">Sandy</option>
+                            <option value="silt">Silt</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="season">Growing Season</label>
+                        <select id="season" name="season" required>
+                            <option value="">Select season</option>
+                            <option value="kharif">Kharif (Monsoon)</option>
+                            <option value="rabi">Rabi (Winter)</option>
+                            <option value="zaid">Zaid (Summer)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Farm Location</label>
+                        <input type="text" id="location" name="location" placeholder="Enter district or village name" required>
+                    </div>
+                    
+                    <button type="submit" class="btn">Predict Yield</button>
+                </form>
+            </div>
+            
+            <div class="card" id="predictionResult" style="display: none;">
+                <h3>Prediction Result</h3>
+                <div id="resultContent"></div>
+            </div>
+            
+            <div class="card">
+                <h3>Weather Information</h3>
+                <div class="weather-form">
+                    <div class="form-group">
+                        <label for="weatherLocation">Get Weather for:</label>
+                        <input type="text" id="weatherLocation" placeholder="Enter location">
+                    </div>
+                    <button id="getWeather" class="btn btn-secondary">Get Weather</button>
+                </div>
+                <div id="weatherResult"></div>
+            </div>
+        </div>
+
+        <!-- Soil Analysis Page -->
+        <div id="soil-analysis" class="page-section fade-in">
+            <h2>Soil Analysis</h2>
+            <p>Analyze your soil composition and get recommendations for improvement</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Soil Parameters</h3>
+                    <button class="btn btn-secondary" id="refreshSoilData">Refresh Data</button>
+                </div>
+                <div class="card-body">
+                    <div class="soil-parameters">
+                        <div class="soil-parameter">
+                            <div class="parameter-label">
+                                <span>pH Level</span>
+                                <span class="parameter-value">6.8</span>
+                            </div>
+                            <div class="parameter-bar">
+                                <div class="parameter-fill" data-width="68" style="background-color: var(--success);"></div>
+                            </div>
+                            <div class="parameter-status">Optimal</div>
+                        </div>
+                        
+                        <div class="soil-parameter">
+                            <div class="parameter-label">
+                                <span>Nitrogen (N)</span>
+                                <span class="parameter-value">0.15%</span>
+                            </div>
+                            <div class="parameter-bar">
+                                <div class="parameter-fill" data-width="45" style="background-color: var(--warning);"></div>
+                            </div>
+                            <div class="parameter-status">Moderate</div>
+                        </div>
+                        
+                        <div class="soil-parameter">
+                            <div class="parameter-label">
+                                <span>Phosphorus (P)</span>
+                                <span class="parameter-value">0.08%</span>
+                            </div>
+                            <div class="parameter-bar">
+                                <div class="parameter-fill" data-width="30" style="background-color: var(--danger);"></div>
+                            </div>
+                            <div class="parameter-status">Low</div>
+                        </div>
+                        
+                        <div class="soil-parameter">
+                            <div class="parameter-label">
+                                <span>Potassium (K)</span>
+                                <span class="parameter-value">0.20%</span>
+                            </div>
+                            <div class="parameter-bar">
+                                <div class="parameter-fill" data-width="70" style="background-color: var(--success);"></div>
+                            </div>
+                            <div class="parameter-status">Good</div>
+                        </div>
+                        
+                        <div class="soil-parameter">
+                            <div class="parameter-label">
+                                <span>Organic Matter</span>
+                                <span class="parameter-value">2.5%</span>
+                            </div>
+                            <div class="parameter-bar">
+                                <div class="parameter-fill" data-width="50" style="background-color: var(--warning);"></div>
+                            </div>
+                            <div class="parameter-status">Moderate</div>
+                        </div>
+                        
+                        <div class="soil-parameter">
+                            <div class="parameter-label">
+                                <span>Moisture Content</span>
+                                <span class="parameter-value">22%</span>
+                            </div>
+                            <div class="parameter-bar">
+                                <div class="parameter-fill" data-width="60" style="background-color: var(--info);"></div>
+                            </div>
+                            <div class="parameter-status">Adequate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Soil Recommendations</h3>
+                </div>
+                <div class="card-body">
+                    <div class="recommendation-list">
+                        <div class="recommendation-item">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Phosphorus Deficiency</h4>
+                                <p>Your soil shows low phosphorus levels. Apply rock phosphate or superphosphate at 50 kg/ha before planting.</p>
+                                <div class="recommendation-priority high">High Priority</div>
+                            </div>
+                        </div>
+                        
+                        <div class="recommendation-item">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Organic Matter</h4>
+                                <p>Increase organic matter by adding compost or green manure crops during the off-season.</p>
+                                <div class="recommendation-priority medium">Medium Priority</div>
+                            </div>
+                        </div>
+                        
+                        <div class="recommendation-item">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Moisture Management</h4>
+                                <p>Consider mulching to retain soil moisture, especially during dry periods.</p>
+                                <div class="recommendation-priority low">Low Priority</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Soil Health History</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="soilHealthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crop Calendar Page -->
+        <div id="crop-calendar" class="page-section fade-in">
+            <h2>Crop Calendar</h2>
+            <p>Plan your farming activities throughout the year</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Annual Crop Calendar</h3>
+                    <div class="card-actions">
+                        <select id="cropFilter" class="form-control">
+                            <option value="all">All Crops</option>
+                            <option value="rice">Rice</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="maize">Maize</option>
+                            <option value="cotton">Cotton</option>
+                            <option value="sugarcane">Sugarcane</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="calendar-container">
+                        <div class="calendar-month">
+                            <div class="month-header">January</div>
+                            <div class="month-content">
+                                <div class="crop-activity" data-crop="wheat">
+                                    <div class="activity-icon activity-maintenance">
+                                        <i class="fas fa-seedling"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Wheat Maintenance</div>
+                                        <div class="activity-date">15-20 Jan</div>
+                                    </div>
+                                </div>
+                                <div class="crop-activity" data-crop="sugarcane">
+                                    <div class="activity-icon activity-harvesting">
+                                        <i class="fas fa-cut"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Sugarcane Harvest</div>
+                                        <div class="activity-date">25-31 Jan</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-month">
+                            <div class="month-header">February</div>
+                            <div class="month-content">
+                                <div class="crop-activity" data-crop="wheat">
+                                    <div class="activity-icon activity-harvesting">
+                                        <i class="fas fa-cut"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Wheat Harvest</div>
+                                        <div class="activity-date">10-20 Feb</div>
+                                    </div>
+                                </div>
+                                <div class="crop-activity" data-crop="maize">
+                                    <div class="activity-icon activity-planting">
+                                        <i class="fas fa-seedling"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Maize Planting</div>
+                                        <div class="activity-date">20-28 Feb</div>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                    </div>
+                    <div class="calendar-month">
+                            <div class="month-header">March</div>
+                            <div class="month-content">
+                                <div class="crop-activity" data-crop="rice">
+                                    <div class="activity-icon activity-planting">
+                                        <i class="fas fa-seedling"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Rice Nursery Preparation</div>
+                                        <div class="activity-date">5-15 Mar</div>
+                                    </div>
+                                </div>
+                                <div class="crop-activity" data-crop="maize">
+                                    <div class="activity-icon activity-maintenance">
+                                        <i class="fas fa-seedling"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Maize Maintenance</div>
+                                        <div class="activity-date">15-25 Mar</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-month">
+                            <div class="month-header">April</div>
+                            <div class="month-content">
+                                <div class="crop-activity" data-crop="rice">
+                                    <div class="activity-icon activity-planting">
+                                        <i class="fas fa-seedling"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Rice Transplanting</div>
+                                        <div class="activity-date">10-25 Apr</div>
+                                    </div>
+                                </div>
+                                <div class="crop-activity" data-crop="cotton">
+                                    <div class="activity-icon activity-planting">
+                                        <i class="fas fa-seedling"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Cotton Sowing</div>
+                                        <div class="activity-date">20-30 Apr</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Add Custom Activity</h3>
+                </div>
+                <div class="card-body">
+                    <form id="customActivityForm">
+                        <div class="form-group">
+                            <label for="activityTitle">Activity Title</label>
+                            <input type="text" id="activityTitle" name="activityTitle" placeholder="Enter activity title" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="activityCrop">Crop</label>
+                            <select id="activityCrop" name="activityCrop" required>
+                                <option value="">Select a crop</option>
+                                <option value="rice">Rice</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="maize">Maize</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="sugarcane">Sugarcane</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="activityType">Activity Type</label>
+                            <select id="activityType" name="activityType" required>
+                                <option value="">Select activity type</option>
+                                <option value="planting">Planting</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="harvesting">Harvesting</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="activityStartDate">Start Date</label>
+                                <input type="date" id="activityStartDate" name="activityStartDate" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="activityEndDate">End Date</label>
+                                <input type="date" id="activityEndDate" name="activityEndDate" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="activityNotes">Notes</label>
+                            <textarea id="activityNotes" name="activityNotes" rows="3" placeholder="Enter any additional notes"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Add Activity</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Market Prices Page -->
+        <div id="market-prices" class="page-section fade-in">
+            <h2>Market Prices</h2>
+            <p>Stay updated with the latest crop prices in the market</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Current Market Prices</h3>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" id="refreshPrices">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="price-cards">
+                        <div class="price-card">
+                            <div class="crop-info">
+                                <div class="crop-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div>
+                                    <h4>Rice</h4>
+                                    <p>Basmati</p>
+                                </div>
+                            </div>
+                            <div class="price-details">
+                                <div class="current-price">₹3,850</div>
+                                <div class="price-change price-up">
+                                    <i class="fas fa-arrow-up"></i> 2.5%
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="price-card">
+                            <div class="crop-info">
+                                <div class="crop-icon">
+                                    <i class="fas fa-wheat-awn"></i>
+                                </div>
+                                <div>
+                                    <h4>Wheat</h4>
+                                    <p>MP Sharbati</p>
+                                </div>
+                            </div>
+                            <div class="price-details">
+                                <div class="current-price">₹2,250</div>
+                                <div class="price-change price-down">
+                                    <i class="fas fa-arrow-down"></i> 1.2%
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="price-card">
+                            <div class="crop-info">
+                                <div class="crop-icon">
+                                    <i class="fas fa-corn"></i>
+                                </div>
+                                <div>
+                                    <h4>Maize</h4>
+                                    <p>Yellow</p>
+                                </div>
+                            </div>
+                            <div class="price-details">
+                                <div class="current-price">₹1,850</div>
+                                <div class="price-change price-up">
+                                    <i class="fas fa-arrow-up"></i> 3.1%
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="price-card">
+                            <div class="crop-info">
+                                <div class="crop-icon">
+                                    <i class="fas fa-cloud"></i>
+                                </div>
+                                <div>
+                                    <h4>Cotton</h4>
+                                    <p>Long Staple</p>
+                                </div>
+                            </div>
+                            <div class="price-details">
+                                <div class="current-price">₹6,200</div>
+                                <div class="price-change price-up">
+                                    <i class="fas fa-arrow-up"></i> 1.8%
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="price-card">
+                            <div class="crop-info">
+                                <div class="crop-icon">
+                                    <i class="fas fa-candy-cane"></i>
+                                </div>
+                                <div>
+                                    <h4>Sugarcane</h4>
+                                    <p>Per Quintal</p>
+                                </div>
+                            </div>
+                            <div class="price-details">
+                                <div class="current-price">₹315</div>
+                                <div class="price-change price-down">
+                                    <i class="fas fa-arrow-down"></i> 0.5%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Price Trends</h3>
+                    <div class="card-actions">
+                        <select id="priceTrendCrop" class="form-control">
+                            <option value="rice">Rice</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="maize">Maize</option>
+                            <option value="cotton">Cotton</option>
+                            <option value="sugarcane">Sugarcane</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="priceTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Market Insights</h3>
+                </div>
+                <div class="card-body">
+                    <div class="insights-container">
+                        <div class="insight-item">
+                            <div class="insight-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="insight-content">
+                                <h4>Rice Prices Expected to Rise</h4>
+                                <p>Due to increased demand in international markets, rice prices are expected to rise by 5-7% in the next month.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="insight-item">
+                            <div class="insight-icon">
+                                <i class="fas fa-cloud-rain"></i>
+                            </div>
+                            <div class="insight-content">
+                                <h4>Wheat Prices Stabilize</h4>
+                                <p>After recent fluctuations, wheat prices are expected to stabilize as new harvest enters the market.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="insight-item">
+                            <div class="insight-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="insight-content">
+                                <h4>Transport Costs Increase</h4>
+                                <p>Rising fuel prices may impact transportation costs, potentially affecting final market prices for all crops.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Page -->
+        <div id="recommendations" class="page-section fade-in">
+            <h2>Farm Recommendations</h2>
+            <p>Personalized recommendations based on your farm conditions</p>
+            
+            <div class="card">
+                <h3>Current Recommendations</h3>
+                <div class="recommendation-list">
+                    <div class="recommendation-item">
+                        <div class="recommendation-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="recommendation-content">
+                            <h4>Irrigation Schedule</h4>
+                            <p>Next irrigation in 3 days. Apply 2 inches of water.</p>
+                            <div class="recommendation-priority high">High Priority</div>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="recommendation-content">
+                            <h4>Fertilizer Application</h4>
+                            <p>Apply nitrogen fertilizer at 50 kg/ha next week.</p>
+                            <div class="recommendation-priority medium">Medium Priority</div>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="recommendation-content">
+                            <h4>Pest Control</h4>
+                            <p>Monitor for stem borer infestation. Consider neem oil spray if detected.</p>
+                            <div class="recommendation-priority low">Low Priority</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Seasonal Recommendations</h3>
+                <div class="seasonal-tabs">
+                    <button class="tab-btn active" data-season="kharif">Kharif Season</button>
+                    <button class="tab-btn" data-season="rabi">Rabi Season</button>
+                    <button class="tab-btn" data-season="zaid">Zaid Season</button>
+                </div>
+                
+                <div class="tab-content active" id="kharif">
+                    <h4>Kharif Season Recommendations</h4>
+                    <ul>
+                        <li>Choose flood-resistant rice varieties</li>
+                        <li>Ensure proper drainage systems</li>
+                        <li>Apply basal fertilizer before monsoon</li>
+                        <li>Monitor for blast disease in humid conditions</li>
+                    </ul>
+                </div>
+                
+                <div class="tab-content" id="rabi">
+                    <h4>Rabi Season Recommendations</h4>
+                    <ul>
+                        <li>Choose drought-tolerant wheat varieties</li>
+                        <li>Apply irrigation at critical growth stages</li>
+                        <li>Monitor for yellow rust disease</li>
+                        <li>Consider mulching to conserve soil moisture</li>
+                    </ul>
+                </div>
+                
+                <div class="tab-content" id="zaid">
+                    <h4>Zaid Season Recommendations</h4>
+                    <ul>
+                        <li>Choose heat-tolerant crops like maize or vegetables</li>
+                        <li>Ensure adequate irrigation facilities</li>
+                        <li>Apply organic matter to improve soil water retention</li>
+                        <li>Use shade nets for sensitive crops</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Resource Optimization</h3>
+                <div class="resource-optimization">
+                    <div class="resource-item">
+                        <h4>Water Usage</h4>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 65%"></div>
+                        </div>
+                        <p>Current usage: 65% of optimal</p>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <h4>Fertilizer Efficiency</h4>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 80%"></div>
+                        </div>
+                        <p>Current efficiency: 80%</p>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <h4>Pesticide Usage</h4>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 45%"></div>
+                        </div>
+                        <p>Current usage: 45% of recommended</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Page -->
+        <!-- Notifications Page -->
+        <div id="notifications" class="page-section fade-in">
+            <h2>Notifications</h2>
+            <p>Stay updated with alerts and reminders for your farm</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Notifications</h3>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" id="markAllRead">Mark All as Read</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="notification-list">
+                        <div class="notification-item unread">
+                            <div class="notification-icon notification-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Pest Alert</h4>
+                                <p>High risk of stem borer infestation detected in your area. Take preventive measures immediately.</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">2 hours ago</span>
+                                    <button class="btn btn-sm btn-primary mark-as-read">Mark as Read</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-item unread">
+                            <div class="notification-icon notification-warning">
+                                <i class="fas fa-cloud-rain"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Weather Alert</h4>
+                                <p>Heavy rainfall expected in the next 48 hours. Ensure proper drainage in your fields.</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">5 hours ago</span>
+                                    <button class="btn btn-sm btn-primary mark-as-read">Mark as Read</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-item unread">
+                            <div class="notification-icon notification-success">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Price Alert</h4>
+                                <p>Rice prices have reached your target of ₹4,000 per quintal. Consider selling now for maximum profit.</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">1 day ago</span>
+                                    <button class="btn btn-sm btn-primary mark-as-read">Mark as Read</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-item read">
+                            <div class="notification-icon notification-info">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Crop Reminder</h4>
+                                <p>Time to apply fertilizer to your wheat crop. Recommended dosage: 50 kg NPK per hectare.</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">2 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-item read">
+                            <div class="notification-icon notification-info">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Workshop Reminder</h4>
+                                <p>Don't forget the sustainable farming workshop tomorrow at 10 AM in the community center.</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Notification Settings</h3>
+                </div>
+                <div class="card-body">
+                    <form id="notificationSettingsForm">
+                        <div class="settings-group">
+                            <h4>Notification Types</h4>
+                            <div class="form-check">
+                                <input type="checkbox" id="weatherAlerts" name="notificationTypes" value="weather" checked>
+                                <label for="weatherAlerts">Weather Alerts</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="pestAlerts" name="notificationTypes" value="pest" checked>
+                                <label for="pestAlerts">Pest and Disease Alerts</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="priceAlerts" name="notificationTypes" value="price" checked>
+                                <label for="priceAlerts">Price Alerts</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="cropReminders" name="notificationTypes" value="crop" checked>
+                                <label for="cropReminders">Crop Reminders</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="workshopAlerts" name="notificationTypes" value="workshop">
+                                <label for="workshopAlerts">Workshop and Event Alerts</label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-group">
+                            <h4>Notification Methods</h4>
+                            <div class="form-check">
+                                <input type="checkbox" id="inAppNotifications" name="notificationMethods" value="inapp" checked>
+                                <label for="inAppNotifications">In-App Notifications</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="emailNotifications" name="notificationMethods" value="email" checked>
+                                <label for="emailNotifications">Email Notifications</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="smsNotifications" name="notificationMethods" value="sms">
+                                <label for="smsNotifications">SMS Notifications</label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-group">
+                            <h4>Notification Frequency</h4>
+                            <div class="form-check">
+                                <input type="radio" id="immediate" name="frequency" value="immediate" checked>
+                                <label for="immediate">Immediate</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="radio" id="daily" name="frequency" value="daily">
+                                <label for="daily">Daily Digest</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="radio" id="weekly" name="frequency" value="weekly">
+                                <label for="weekly">Weekly Digest</label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile" class="page-section fade-in">
+            <h2>My Profile</h2>
+            <p>Manage your account and farm details</p>
+            
+            <div class="card">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h2>Ram Kumar</h2>
+                        <p>Farmer since 2010</p>
+                        <p>Bhubaneswar, Odisha</p>
+                    </div>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Acres of Land</div>
+                    </div>
+                    
+                    <div class="profile-stat">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Crop Types</div>
+                    </div>
+                    
+                    <div class="profile-stat">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    
+                    <div class="profile-stat">
+                        <div class="stat-number">8.5</div>
+                        <div class="stat-label">Avg. Yield (tons/acre)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Personal Information</h3>
+                </div>
+                <div class="card-body">
+                    <form id="personalInfoForm" data-auto-save>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" value="Ram" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" value="Kumar" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="ram.kumar@example.com" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" value="9876543210" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" name="address" value="Village Patrapada" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="district">District</label>
+                                <input type="text" id="district" name="district" value="Khordha" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <select id="state" name="state" required>
+                                    <option value="">Select State</option>
+                                    <option value="Odisha" selected>Odisha</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pincode">Pincode</label>
+                                <input type="text" id="pincode" name="pincode" value="751019" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Farm Details</h3>
+                </div>
+                <div class="card-body">
+                    <form id="farmDetailsForm" data-auto-save>
+                        <div class="form-group">
+                            <label for="farmName">Farm Name</label>
+                            <input type="text" id="farmName" name="farmName" value="Green Acres Farm" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="totalArea">Total Area (acres)</label>
+                                <input type="number" id="totalArea" name="totalArea" value="15" min="0.1" step="0.1" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="irrigatedArea">Irrigated Area (acres)</label>
+                                <input type="number" id="irrigatedArea" name="irrigatedArea" value="12" min="0" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="soilType">Primary Soil Type</label>
+                            <select id="soilType" name="soilType" required>
+                                <option value="">Select Soil Type</option>
+                                <option value="alluvial" selected>Alluvial</option>
+                                <option value="black">Black</option>
+                                <option value="red">Red</option>
+                                <option value="laterite">Laterite</option>
+                                <option value="sandy">Sandy</option>
+                                <option value="clay">Clay</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="waterSource">Water Source</label>
+                            <select id="waterSource" name="waterSource" required>
+                                <option value="">Select Water Source</option>
+                                <option value="canal" selected>Canal</option>
+                                <option value="well">Well</option>
+                                <option value="tube-well">Tube Well</option>
+                                <option value="tank">Tank</option>
+                                <option value="river">River</option>
+                                <option value="rainfed">Rainfed</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cropsGrown">Crops Grown (Select all that apply)</label>
+                            <div class="checkbox-group">
+                                <div class="form-check">
+                                    <input type="checkbox" id="rice" name="cropsGrown" value="rice" checked>
+                                    <label for="rice">Rice</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input type="checkbox" id="wheat" name="cropsGrown" value="wheat" checked>
+                                    <label for="wheat">Wheat</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input type="checkbox" id="maize" name="cropsGrown" value="maize">
+                                    <label for="maize">Maize</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input type="checkbox" id="cotton" name="cropsGrown" value="cotton">
+                                    <label for="cotton">Cotton</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input type="checkbox" id="sugarcane" name="cropsGrown" value="sugarcane">
+                                    <label for="sugarcane">Sugarcane</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input type="checkbox" id="pulses" name="cropsGrown" value="pulses">
+                                    <label for="pulses">Pulses</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    
+                                      <input type="checkbox" id="vegetables" name="cropsGrown" value="vegetables">
+                                    <label for="vegetables">Vegetables</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Account Settings</h3>
+                </div>
+                <div class="card-body">
+                    <form id="accountSettingsForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" name="currentPassword" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" name="newPassword">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="language">Preferred Language</label>
+                            <select id="language" name="language">
+                                <option value="en" selected>English</option>
+                                <option value="hi">Hindi</option>
+                                <option value="or">Odia</option>
+                                <option value="te">Telugu</option>
+                                <option value="ta">Tamil</option>
+                                <option value="pa">Punjabi</option>
+                                <option value="mr">Marathi</option>
+                                <option value="bn">Bengali</option>
+                                <option value="gu">Gujarati</option>
+                                <option value="kn">Kannada</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timezone">Timezone</label>
+                            <select id="timezone" name="timezone">
+                                <option value="IST" selected>Indian Standard Time (IST)</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn">Update Settings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        !-- About Page -->
+        <div id="about" class="page-section fade-in">
+            <h2>About AI Crop Yield Prediction</h2>
+            <p>Smart India Hackathon 2025 Project</p>
+            
+            <div class="card">
+                <h3>Project Overview</h3>
+                <p>Our AI-Powered Crop Yield Prediction and Optimization system is designed to help farmers make data-driven decisions to maximize their crop yields while optimizing resource usage. By leveraging historical agricultural data, weather patterns, and soil information, our platform provides accurate yield predictions and personalized recommendations.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Problem Statement</h3>
+                <p><strong>ID:</strong> 25044</p>
+                <p><strong>Title:</strong> AI - Powered Crop Yield Prediction and Optimization</p>
+                <p><strong>Organization:</strong> Government of Odisha, Department Electronics & IT Department</p>
+                <p><strong>Category:</strong> Software</p>
+                <p><strong>Theme:</strong> Agriculture, FoodTech & Rural Development</p>
+            </div>
+            
+            <div class="card">
+                <h3>Our Solution</h3>
+                <div class="solution-features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Yield Prediction</h4>
+                        <p>Accurate crop yield predictions using machine learning algorithms</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <h4>Weather Integration</h4>
+                        <p>Real-time weather data to inform farming decisions</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Smart Recommendations</h4>
+                        <p>Personalized recommendations for irrigation, fertilization, and pest control</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Mobile Friendly</h4>
+                        <p>Accessible on any device, even with limited connectivity</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Our Team</h3>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Team Lead</h4>
+                        <p>Project Management & Integration</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>AI Specialist</h4>
+                        <p>Machine Learning Models</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Data Scientist</h4>
+                        <p>Data Analysis & Visualization</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Backend Developer</h4>
+                        <p>Server & API Development</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Frontend Developer</h4>
+                        <p>User Interface & Experience</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Agriculture Expert</h4>
+                        <p>Domain Knowledge & Validation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Voice Assistant -->
+    <div class="voice-assistant">
+        <button id="voiceAssistantBtn" class="voice-assistant-btn">
+            <i class="fas fa-microphone"></i>
+        </button>
+        
+        <div id="voiceAssistantPanel" class="voice-assistant-panel">
+            <div class="voice-assistant-header">
+                <h4>Farming Assistant</h4>
+                <button id="voiceAssistantClose" class="voice-assistant-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="voiceAssistantMessages" class="voice-assistant-messages"></div>
+            
+            <div class="voice-assistant-input">
+                <input type="text" id="voiceAssistantInput" placeholder="Type your message...">
+                <button id="voiceAssistantSend" class="btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+                <button id="voiceAssistantVoiceBtn" class="btn">
+                    <i class="fas fa-microphone"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
