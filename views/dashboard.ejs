@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+
+<div class="dashboard fade-in">
+  <h2>Farmer Dashboard</h2>
+  <p>Welcome back, <%= user.username %>! Here's an overview of your farm.</p>
+  
+  <div class="dashboard-grid">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-seedling"></i>
+      </div>
+      <h3>Current Crop</h3>
+      <div class="stat-value">Rice</div>
+      <p>Planted: 15 days ago</p>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <h3>Predicted Yield</h3>
+      <div class="stat-value">3.2 t/ha</div>
+      <p>Confidence: 85%</p>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-cloud-sun"></i>
+      </div>
+      <h3>Weather Status</h3>
+      <div class="stat-value">Sunny</div>
+      <p>Temp: 28°C, Humidity: 65%</p>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3>Alerts</h3>
+      <div class="stat-value">2</div>
+      <p>Pest risk, Nutrient deficiency</p>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h3>Recent Activities</h3>
+    <ul class="activity-list">
+      <li>Fertilizer applied - 3 days ago</li>
+      <li>Irrigation completed - 5 days ago</li>
+      <li>Soil test conducted - 10 days ago</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <h3>Quick Actions</h3>
+    <div class="action-buttons">
+      <a href="/prediction" class="btn">Get New Prediction</a>
+      <a href="/recommendations" class="btn btn-secondary">View Recommendations</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
